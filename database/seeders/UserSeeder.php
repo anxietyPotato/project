@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-             $this->command->getOutput()->progressStart(100);
+             $this->command->getOutput()->progressStart(1000);
 
         for ($i = 0; $i < $amount ; $i++) {
 

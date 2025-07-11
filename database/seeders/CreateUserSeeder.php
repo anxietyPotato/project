@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class CreateUserSeeder extends Seeder
 {
@@ -15,44 +17,37 @@ class CreateUserSeeder extends Seeder
      */
     public function run()
     {
+        $name =$this->command->ask('insert your Usernname?');
 
-        $user = $this->command->getOutput()->ask('insert Username name?');
-        if ($user === null) {
-            $this->command->getOutput()->error('<error> Username not inserted</error>');
+        if($name === null) {
+            $this->command->getOutput()->error('Username not inserted');
+        }
+
+        $email = $this->command->getOutput()->ask('Enter your email');
+
+        if($email === null){
+            $this->command->getOutput()->error('Email is required');
+        }
+        $password =$this->command->ask('insert your password?');
+
+        if($password === null) {
+            $this->command->getOutput()->error('password not inserted');
         }
 
 
-        $email = $this->command->getOutput()->ask('insert email?');
-        if ($email === null) {
-            $this->command->getOutput()->error('<error>email not inserted</error>');
-        }
 
 
-        $password = $this->command->getOutput()->ask('insert Password?');
 
-        if ($password === null) {
-            $this->command->getOutput()->error('<error>Password not inserted</error>');
-        }
+        DB::connection('mysql')->table('users')->insert([
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make($password),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $this->command->getOutput()->success('User created successfully');
 
 
-        $this->command->getOutput()->info("successfully added new  user '$user' with email '$email' and Password '$password'");
-
-
-        {
-            $exists = \App\Models\User::where('email', $email)->first();
-
-            if ($exists) {
-                $this->command->getOutput()->error(" ERROR: User '$email' already exists. Skipping...");
-            } else {
-                \App\Models\User::create([
-                    'name' => $user,
-                    'email' => $email,
-                    'password' => Hash::make($password),
-                ]);
-                $this->command->getOutput()->info(" Successfully added new user '$user' with email '$email'.");
-            }
-
-        }
     }
 }
 
