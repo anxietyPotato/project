@@ -27,8 +27,15 @@ class UserWeatherSeeder extends Seeder
 
         $humidity=$this->command->getOutput()->ask('insert Humidity?');
 
-            if ($humidity==null) {
+             if ($humidity==null) {
                     $this->command->getOutput()->error('<error>temperature not found</error>');
+        }
+
+        $existingCity = \App\Models\Cities::where('name', $city)->first();
+
+             if ($existingCity) {
+                    $this->command->getOutput()->error("City '$city' already exists, Skipping.");
+            return;
         }
                     \App\Models\Cities::create([
                         'name'=>$city,
@@ -36,6 +43,8 @@ class UserWeatherSeeder extends Seeder
                         'humidity'=>$humidity
             ]);
 
-            $this->command->getOutput()->info('successfully added new city $city with temperature $temperature and humidity $humidity');
+            $this->command->getOutput()->info("successfully added new city '$city' with temperature '$temperature' and humidity '$humidity");
+
+
     }
 }
