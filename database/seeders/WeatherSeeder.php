@@ -32,8 +32,18 @@ class WeatherSeeder extends Seeder
         ];
 
         foreach ($cities as $city) {
-            \App\Models\Cities::create($city);
+            $exists = \App\Models\Cities::where('name', $city['name'])->first();
+
+            if ($exists) {
+                $this->command->getOutput()->error("City '{$city['name']}' already exists. Skipping...");
+            } else {
+                \App\Models\Cities::create($city);
+                $this->command->getOutput()->info("Added city successfully.");
+            }
         }
     }
-
 }
+
+
+
+
