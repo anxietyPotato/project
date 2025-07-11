@@ -25,6 +25,9 @@ class UserSeeder extends Seeder
              $this->command->getOutput()->progressStart(100);
 
         for ($i = 0; $i < $amount ; $i++) {
+
+             $faker->unique()->safeEmail;
+
             User::create([
                 'name' => $faker->name,
                 'email' => $faker->email,
@@ -35,4 +38,5 @@ class UserSeeder extends Seeder
 
                 $this->command->getOutput()->progressFinish();
     }
+
 }
