@@ -19,19 +19,27 @@ class CreateUserSeeder extends Seeder
     {
         $name =$this->command->ask('insert your Usernname?');
 
-        if($name === null) {
-            $this->command->getOutput()->error('Username not inserted');
+                if($name === null) {
+                    $this->command->getOutput()->error('Username not inserted');
         }
 
         $email = $this->command->getOutput()->ask('Enter your email');
 
-        if($email === null){
-            $this->command->getOutput()->error('Email is required');
+                if($email === null){
+                     $this->command->getOutput()->error('Email is required');
         }
+
+                 if (User::where('email', $email)->exists()) {
+
+                    $this->command->getOutput()->error('A user with this email already exists.');
+
+        }
+
+
         $password =$this->command->ask('insert your password?');
 
-        if($password === null) {
-            $this->command->getOutput()->error('password not inserted');
+                if($password === null) {
+                    $this->command->getOutput()->error('password not inserted');
         }
 
 
