@@ -38,17 +38,14 @@ class CreateUserSeeder extends Seeder
 
 
 
-        DB::connection('mysql')->table('users')->insert([
+        User::create([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
-        $this->command->getOutput()->success('User created successfully');
 
+        $this->command->getOutput()->success('User created successfully'); }
 
     }
-}
 
 

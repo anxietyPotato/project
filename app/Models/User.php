@@ -62,10 +62,7 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
-    public function index()
-    {
-        dd(User::orderBy('id', 'desc')->get());
-    }
+
 
 
 

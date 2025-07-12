@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('layouts.navigation')
+
 
     <meta charset="UTF-8">
     <title>Edit City</title>
