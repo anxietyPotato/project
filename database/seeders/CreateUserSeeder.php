@@ -17,34 +17,28 @@ class CreateUserSeeder extends Seeder
      */
     public function run()
     {
-        $name =$this->command->ask('insert your Usernname?');
-
-                if($name === null) {
-                    $this->command->getOutput()->error('Username not inserted');
+        $name = $this->command->ask('Insert your Username?');
+        if (empty($name)) {
+            $this->command->error('Username not inserted');
+            return;
         }
 
-        $email = $this->command->getOutput()->ask('Enter your email');
-
-                if($email === null){
-                     $this->command->getOutput()->error('Email is required');
+        $email = $this->command->ask('Enter your email');
+        if (empty($email)) {
+            $this->command->error('Email is required');
+            return;
         }
 
-                 if (User::where('email', $email)->exists()) {
-
-                    $this->command->getOutput()->error('A user with this email already exists.');
-
+        if (User::where('email', $email)->exists()) {
+            $this->command->error('A user with this email already exists.');
+            return;
         }
 
-
-        $password =$this->command->ask('insert your password?');
-
-                if($password === null) {
-                    $this->command->getOutput()->error('password not inserted');
+        $password = $this->command->ask('Insert your password?');
+        if (empty($password)) {
+            $this->command->error('Password not inserted');
+            return;
         }
-
-
-
-
 
         User::create([
             'name' => $name,
@@ -52,8 +46,7 @@ class CreateUserSeeder extends Seeder
             'password' => Hash::make($password),
         ]);
 
-        $this->command->getOutput()->success('User created successfully'); }
-
-    }
+        $this->command->info('✅ User created successfully');
+    } }
 
 
