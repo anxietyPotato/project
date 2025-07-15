@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cities;
 use Illuminate\Database\Seeder;
 
 class WeatherSeeder extends Seeder
@@ -32,12 +33,14 @@ class WeatherSeeder extends Seeder
         ];
 
         foreach ($cities as $city) {
-            $exists = \App\Models\Cities::where('name', $city['name'])->first();
+            $exists = Cities::where('name', $city['name'])->first();
 
             if ($exists) {
                 $this->command->getOutput()->error("City '{$city['name']}' already exists. Skipping...");
+
+
             } else {
-                \App\Models\Cities::create($city);
+                Cities::create($city);
                 $this->command->getOutput()->info("Added city successfully.");
             }
         }

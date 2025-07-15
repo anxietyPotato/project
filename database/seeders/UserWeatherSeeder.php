@@ -14,20 +14,20 @@ class UserWeatherSeeder extends Seeder
     public function run()
     {
         $city=$this->command->getOutput()->ask('City name?');
-             if ($city==null) {
+             if ($city ===  null) {
                      $this->command->getOutput()->error('<error>City name not found</error>');
         }
 
 
         $temperature=$this->command->getOutput()->ask('insert Temperature?');
-             if ($temperature==null) {
+             if ($temperature === null) {
                      $this->command->getOutput()->error('<error>temperature not found</error>');
         }
 
 
         $humidity=$this->command->getOutput()->ask('insert Humidity?');
 
-             if ($humidity==null) {
+             if ($humidity === null) {
                     $this->command->getOutput()->error('<error>temperature not found</error>');
         }
 

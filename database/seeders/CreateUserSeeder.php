@@ -29,7 +29,9 @@ class CreateUserSeeder extends Seeder
             return;
         }
 
-        if (User::where('email', $email)->exists()) {
+        $user = User::where(['email' => $email])->first();
+
+        if ($user instanceof User) {
             $this->command->error('A user with this email already exists.');
             return;
         }
