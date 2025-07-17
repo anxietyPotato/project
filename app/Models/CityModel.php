@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class CityModel extends Model
 {
     protected $table = 'city';
-    protected $fillable = 'name';
+    protected $fillable = ['name'] ;
 }
