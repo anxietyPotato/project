@@ -75,15 +75,18 @@
 <body>
 
 <div class="container">
-    @foreach($city as $cities)
+
+
+</div><div class="container">
+    @foreach ($cities as $city)
         <div class="grade-card">
-            <h3>{{ $cities->name }}</h3>
-            <p>Current temperature: {{ $cities->temperature }} &#8451;</p>
-            <p class="grade-value">Current humidity of air: {{ $cities->humidity }} &#37;</p>
+            <h3>{{ $city->name }}</h3>
+            <p>Temperature: {{ $city->temperature }} &#8451;</p>
+            <p>Humidity: {{ $city->humidity }}%</p>
+            <p>Added: {{ \Carbon\Carbon::parse($city->created_at)->format('d M Y H:i') }}</p>
         </div>
     @endforeach
 </div>
-
 </body>
 </html>
 

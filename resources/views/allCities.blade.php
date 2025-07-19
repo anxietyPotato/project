@@ -78,9 +78,7 @@
                                 <p class="card-text"><strong>Temperature:</strong> {{ $city->temperature }}°C</p>
                             @endif
 
-                            @if($city->humidity !== null)
-                                <p class="card-text"><strong>Humidity:</strong> {{ $city->humidity }}%</p>
-                            @endif
+
 
                             <p class="card-text"><strong>Recorded At:</strong>
                                 {{ \Carbon\Carbon::parse($city->created_at)->format('Y-m-d') }}

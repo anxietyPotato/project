@@ -13,6 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([
+
+            CitiesSeeder::class,
+                WeatherSeeder::class,
+                CityStatsSeeder::class,
+                ForecastsSeeder::class,
+            ]);
+
+
         \App\Models\User::factory(10)->create();
     }
+
 }

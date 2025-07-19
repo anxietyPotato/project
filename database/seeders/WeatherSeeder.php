@@ -14,23 +14,7 @@ class WeatherSeeder extends Seeder
      */
     public function run()
     {
-        $cities = [
-            [
-                'name' => 'Valjevo',
-                'temperature' => 34,
-                'humidity' => 24,
-            ],
-            [
-                'name' => 'Beogra',
-                'temperature' => 34,
-                'humidity' => 28,
-            ],
-            [
-                'name' => 'Mostar',
-                'temperature' => 34,
-                'humidity' => 28,
-            ],
-        ];
+        $cities =[];
 
         foreach ($cities as $city) {
             $exists = Cities::where('name', $city['name'])->first();
@@ -46,7 +30,6 @@ class WeatherSeeder extends Seeder
         }
     }
 }
-
 
 
 

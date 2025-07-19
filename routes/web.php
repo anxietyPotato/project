@@ -44,7 +44,6 @@ Route::prefix('admin')
         Route::put('/cities/{city}', [CitiesController::class, 'update'])->name('cities.update');
         Route::delete('/cities/{city}', [CitiesController::class, 'destroy'])->name('cities.destroy');
 });
-Route::get('/foreacast/{city}', [ForeacastController::class, 'Index']); {
+Route::get('/', [CitiesController::class, 'welcome']);
 
-};
 

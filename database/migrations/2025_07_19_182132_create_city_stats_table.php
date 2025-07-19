@@ -4,32 +4,24 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCitiesTable extends Migration
+class CreateCityStatsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
+        Schema::create('city_stats', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-
+            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade');
             $table->decimal('temperature', 5, 2)->nullable();
             $table->decimal('humidity', 5, 2)->nullable();
+            $table->timestamp('recorded_at')->nullable();
+
             $table->timestamps();
+            $stats = CityStats::with('city')->get();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('cities');
+        Schema::dropIfExists('city_stats');
     }
 }
