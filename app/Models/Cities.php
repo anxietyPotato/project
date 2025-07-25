@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cities extends Model
 {
     use HasFactory;
+
     protected $table = "cities";
-    protected $fillable = ["name","temperature","humidity"];
+    protected $fillable = ["name", "temperature", "humidity"];
 }

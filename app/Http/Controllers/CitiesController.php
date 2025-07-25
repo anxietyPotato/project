@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Cities;
-
-use App\Models\CityStats;
+use Illuminate\Http\Request;
 
 class CitiesController extends Controller
 {
-
 
 
     public function seeCities(Request $request)
@@ -29,19 +26,12 @@ class CitiesController extends Controller
     }
 
 
-
-
-
-
-
     public function showForm()
     {
 
         $cities = Cities::all();
         return view('addCities', compact('cities'));
     }
-
-
 
 
     public function addCities(Request $request)
@@ -59,7 +49,6 @@ class CitiesController extends Controller
     }
 
 
-
     public function destroy($id)
     {
         $city = Cities::findOrFail($id);
@@ -72,6 +61,7 @@ class CitiesController extends Controller
         $cities = Cities::all();
         return view('allCities', compact('cities'));
     }
+
     public function edit($id)
     {
         $city = Cities::findOrFail($id);
@@ -93,8 +83,9 @@ class CitiesController extends Controller
     }
 
 
-
     // You can use $validated to create or update cities now!
+
+
 
 }
 

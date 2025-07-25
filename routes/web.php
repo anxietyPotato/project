@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\ForeacastController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers;
-use App\Http\Controllers\CitiesController;
-use  App\Http\Middleware\IsAdmin ;
+
 /*
     |--------------------------------------------------------------------------
     | Web Routes

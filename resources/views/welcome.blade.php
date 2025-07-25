@@ -1,6 +1,6 @@
 
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -24,9 +24,15 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .container {
@@ -76,17 +82,34 @@
 
 <div class="container">
 
+    {{-- /*
+    1.          <p>Temperature: {{ $cityForecast->temperature ?? '—' }} &#8451;</p>
 
-</div><div class="container">
-    @foreach ($cities as $city)
-        <div class="grade-card">
+    1.if the thing on the left exists and isn’t null, use it. Otherwise, Show  '—'
+
+
+    2.               <p>recorded_at:
+                {{ $cityForecast->forecast_date
+                    ? Carbon::parse($cityForecast->forecast_date)->format('d M Y H:i')
+                    : '—' }}
+                    </p>
+    2. You're feeding it a string, and it gives you a smart object that knows how to format, compare, and manipulate dates.
+                example : Carbon::parse('next Monday'); // Returns the date of the upcoming Monday
+                Carbon::parse('2 weeks ago'); // Returns the date two weeks before today
+                */ --}}
+
+
+</div>
+<div class="container">
+    @foreach($cities as $city)
+        <div class="grade-card-">
             <h3>{{ $city->name }}</h3>
-            <p>Temperature: {{ $city->temperature }} &#8451;</p>
-            <p>Humidity: {{ $city->humidity }}%</p>
-            <p>Added: {{ \Carbon\Carbon::parse($city->created_at)->format('d M Y H:i') }}</p>
+            <p>Current temperature: {{ $city->temperature }} &#8451;</p>
+            <p class="grade-value">Current humidity of air: {{ $city->humidity }} &#37;</p>
         </div>
     @endforeach
 </div>
+
 </body>
 </html>
 

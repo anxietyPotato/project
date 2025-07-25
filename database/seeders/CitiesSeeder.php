@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use App\Models\Cities;
 use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
 
 class CitiesSeeder extends Seeder
 {
@@ -25,8 +24,8 @@ class CitiesSeeder extends Seeder
 
             Cities::create([
                 'name' => $cityName,
-                'temperature' => $faker->randomFloat(2, -10, 45),
-                'humidity' => $faker->numberBetween(10, 90),
+                'temperature' => $faker->randomFloat(2, 15, 35),
+                'humidity' => $faker->numberBetween(0, 100),
             ]);
 
             $this->command->info("Added city '{$cityName}' successfully.");

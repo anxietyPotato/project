@@ -17,8 +17,7 @@ class DatabaseSeeder extends Seeder
 
             CitiesSeeder::class,
                 WeatherSeeder::class,
-                CityStatsSeeder::class,
-                ForecastsSeeder::class,
+
             ]);
 
 
