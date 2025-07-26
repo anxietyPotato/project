@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Cities;
+use App\Models\CitiesPrognoza;
 use Illuminate\Database\Seeder;
 
 class WeatherSeeder extends Seeder
@@ -14,19 +15,27 @@ class WeatherSeeder extends Seeder
      */
     public function run()
     {
-        $cities =[];
+        $cities = CitiesPrognoza::all();
 
-        foreach ($cities as $city) {
-            $exists = Cities::where('name', $city['name'])->first();
+        foreach($cities as $city)
 
-            if ($exists) {
-                $this->command->getOutput()->error("City '{$city['name']}' already exists. Skipping...");
+        {
+            $exists = Cities::where(['city_id' => $city->id])->first();
+
+            if ($exists !== null) {
+                $this->command->getOutput()->error("City already exists. Skipping...");
+                continue;
 
 
-            } else {
-                Cities::create($city);
-                $this->command->getOutput()->info("Added city successfully.");
             }
+                Cities::create([
+                    'city_id' => $city->id,
+                    'temperature' => rand(15,30),
+                    'humidity' => $city->humidity,
+
+                ]);
+
+
         }
     }
 }

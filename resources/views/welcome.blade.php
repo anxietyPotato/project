@@ -1,10 +1,7 @@
 
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
-
     <meta charset="UTF-8">
     <title>Grades</title>
     <style>
@@ -82,28 +79,23 @@
 
 <div class="container">
 
-    {{-- /*
-    1.          <p>Temperature: {{ $cityForecast->temperature ?? '—' }} &#8451;</p>
+    {{--
+    1. If value exists: {{ $cityForecast->temperature ?? '—' }}
 
-    1.if the thing on the left exists and isn’t null, use it. Otherwise, Show  '—'
-
-
-    2.               <p>recorded_at:
-                {{ $cityForecast->forecast_date
-                    ? Carbon::parse($cityForecast->forecast_date)->format('d M Y H:i')
-                    : '—' }}
-                    </p>
-    2. You're feeding it a string, and it gives you a smart object that knows how to format, compare, and manipulate dates.
-                example : Carbon::parse('next Monday'); // Returns the date of the upcoming Monday
-                Carbon::parse('2 weeks ago'); // Returns the date two weeks before today
-                */ --}}
-
+    2. Formatting date:
+    <p>recorded_at:
+        {{ $cityForecast->forecast_date
+            ? Carbon::parse($cityForecast->forecast_date)->format('d M Y H:i')
+            : '—' }}
+    </p>
+    --}}
 
 </div>
+
 <div class="container">
     @foreach($cities as $city)
-        <div class="grade-card-">
-            <h3>{{ $city->name }}</h3>
+        <div class="grade-card">
+            <h3>{{ $city->cityPrognoza->name }}</h3>
             <p>Current temperature: {{ $city->temperature }} &#8451;</p>
             <p class="grade-value">Current humidity of air: {{ $city->humidity }} &#37;</p>
         </div>
@@ -112,6 +104,7 @@
 
 </body>
 </html>
+
 
 
 

@@ -21,7 +21,10 @@ class CitiesController extends Controller
 
     public function welcome()
     {
-        $cities = Cities::orderBy('name')->get(); // Or inRandomOrder()
+        $cities = Cities::with('cityPrognoza')->get()->sortBy(function ($city) {
+            return $city->cityPrognoza->name ?? '';
+        });
+
         return view('welcome', compact('cities'));
     }
 
