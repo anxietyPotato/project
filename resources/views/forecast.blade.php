@@ -76,38 +76,17 @@
     </style>
 </head>
 <body>
+@php
+    $forecast = $cityPrognoza->forecast->first();
+@endphp
 
-<div class="container">
-
-    {{--
-    1. If value exists: {{ $cityForecast->temperature ?? '—' }}
-
-    2. Formatting date:
-    <p>recorded_at:
-        {{ $cityForecast->forecast_date
-            ? Carbon::parse($cityForecast->forecast_date)->format('d M Y H:i')
-            : '—' }}
-    </p>
-    --}}
-
+<div class="grade-card">
+    <h3>{{ $cityPrognoza->name }}</h3>
+    <p>Current temperature: {{ $forecast->temperature ?? 'N/A' }} &#8451;</p>
+    <p class="grade-value">Current humidity of air: {{ $forecast->humidity ?? 'N/A' }} &#37;</p>
 </div>
 
-<div class="container">
-    @foreach($cities as $city)
-        <div class="grade-card">
-            <h3>{{ $city->cityPrognoza->name ?? $city->name }}</h3>
-            <p>Current temperature: {{ $city->temperature ?? '—' }} &#8451;</p>
-            <p class="grade-value">
-                Current humidity of air: {{ $city->cityPrognoza->humidity ?? '—' }} &#37;
-            </p>
-        </div>
-    @endforeach
 </div>
-
-
+</div>
 </body>
 </html>
-
-
-
-

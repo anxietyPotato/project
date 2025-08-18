@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cities;
+use App\Models\CitiesPrognoza;
 use Illuminate\Http\Request;
 
 class CitiesController extends Controller
@@ -88,7 +89,11 @@ class CitiesController extends Controller
 
     // You can use $validated to create or update cities now!
 
-
+// In Cities.php
+    public function cityPrognoza()
+    {
+        return $this->hasOne(CitiesPrognoza::class);
+    }
 
 }
 

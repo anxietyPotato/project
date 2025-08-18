@@ -15,6 +15,16 @@ class Cities extends Model
 
     public function cityPrognoza()
     {
-        return $this->belongsTo(CitiesPrognoza::class, 'city_id');
+        return $this->hasOne(CitiesPrognoza::class, 'id', 'id');
+        // hasOne(RelatedModel::class, foreign_key_on_related_table, local_key_on_this_table)
     }
+
+    public function getHumidityAttribute()
+    {
+        return $this->cityPrognoza->humidity ?? null;
+    }
+
+
+    // 👇 this makes route model binding use "name" instead of "id"
 }
+

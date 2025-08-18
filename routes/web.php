@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\CitiesController;
-use App\Http\Controllers\ForeacastController;
+use App\Http\Controllers\ForecastController;
+use App\Models\Cities;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,12 +27,12 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/', function () {
-    $city = \App\Models\Cities::all();
+    $city = Cities::all();
     return view('welcome',compact('city')); //done
 });
 
 Route::prefix('admin')
-    ->middleware('auth', App\Http\Middleware\IsAdmin::class)
+    ->middleware('auth' )
     ->group(function () {
     Route::get('/add-Cities', [CitiesController::class, 'showForm'])->name('addCities'); //done
     Route::post('/add-Cities', [CitiesController::class, 'addCities'])->name('addCity'); //done
@@ -44,5 +45,10 @@ Route::prefix('admin')
         Route::delete('/cities/{city}', [CitiesController::class, 'destroy'])->name('cities.destroy');
 });
 Route::get('/', [CitiesController::class, 'welcome']);
+
+Route::get('/forecast/{cityPrognoza:name}', [ForecastController::class, 'showForecast'])->name('forecast.view');
+
+
+
 
 
