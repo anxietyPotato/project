@@ -15,6 +15,10 @@ class ForecastModel extends Model
     {
         return $this->belongsTo(CitiesPrognoza::class, 'city_id','id');
     }
+    public function forecasts()
+    {
+        return $this->hasMany(ForecastModel::class, 'city_id', 'id');
+    }
 
 
 }

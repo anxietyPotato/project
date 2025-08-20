@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ForecastModel;
 
 class CitiesPrognoza extends Model
 {
@@ -31,6 +32,13 @@ class CitiesPrognoza extends Model
     public function getHumidityAttribute()
     {
         return $this->latestForecast->humidity ?? null;
+    }
+
+
+
+    public function forecasts()
+    {
+        return $this->hasMany(ForecastModel::class, 'city_id', 'id');
     }
 
 }

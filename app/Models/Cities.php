@@ -22,7 +22,11 @@ class Cities extends Model
     public function getHumidityAttribute()
     {
         return $this->cityPrognoza->humidity ?? null;
+
     }
+
+
+
 
 
     // 👇 this makes route model binding use "name" instead of "id"

@@ -20,14 +20,13 @@ class CitiesController extends Controller
     }
 
 
+
     public function welcome()
     {
-        $cities = Cities::with('cityPrognoza')->get()->sortBy(function ($city) {
-            return $city->cityPrognoza->name ?? '';
-        });
-
+        $cities = Cities::with('cityPrognoza.forecasts')->get(); // eager load relationships
         return view('welcome', compact('cities'));
     }
+
 
 
     public function showForm()

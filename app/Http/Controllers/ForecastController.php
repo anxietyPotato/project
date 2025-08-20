@@ -15,10 +15,9 @@ class ForecastController extends Controller
 
     public function showForecast(CitiesPrognoza $cityPrognoza)
     {
-        $cityPrognoza->load(['forecast']); // eager load forecast data
+        $cityPrognoza->load('forecasts');
         return view('forecast', compact('cityPrognoza'));
     }
-
 
 
 

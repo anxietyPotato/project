@@ -90,20 +90,24 @@
     </p>
     --}}
 
-</div>
 
-<div class="container">
-    @foreach($cities as $city)
-        <div class="grade-card">
-            <h3>{{ $city->cityPrognoza->name ?? $city->name }}</h3>
-            <p>Current temperature: {{ $city->temperature ?? '—' }} &#8451;</p>
-            <p class="grade-value">
-                Current humidity of air: {{ $city->cityPrognoza->humidity ?? '—' }} &#37;
-            </p>
-        </div>
-    @endforeach
-</div>
 
+@foreach($cities as $city)
+    <div class="grade-card">
+        <h3>{{ $city->cityPrognoza->name ?? $city->name }}</h3>
+        <p>Current temperature: {{ $city->temperature ?? '—' }} &#8451;</p>
+        <p>Current humidity: {{ $city->cityPrognoza->humidity ?? '—' }} &#37;</p>
+
+        <ul>
+            @foreach($city->cityPrognoza->forecasts as $forecast)
+                <li>Forecast date: {{ $forecast->Forecast_date ?? '_' }}</li>
+            @endforeach
+        </ul>
+
+
+
+    </div>
+@endforeach
 
 </body>
 </html>

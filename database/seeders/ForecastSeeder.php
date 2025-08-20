@@ -17,16 +17,23 @@ class ForecastSeeder extends Seeder
     public function run()
     {
         $cities = CitiesPrognoza::all();
-        foreach ($cities as $city) {
-           for ($i = 1; $i <= 5; $i++) {
-               ForecastModel::create([
-                   'city_id' => $city->id,
-                   'temperature' => rand(15, 30),
-                   'humidity' => rand(0,100),
-                   'Forecast_date' => Carbon::now()->addDays(rand(1, 30)),
-               ]);
-           }
-        }
+        $weatherTypes = ['sunny', 'snowy', 'rainy'];
 
+        foreach ($cities as $city) {
+            for ($i = 1; $i <= 5; $i++) {
+                $weatherType = $weatherTypes[array_rand($weatherTypes)];
+                $probability = in_array($weatherType, ['rainy', 'snowy']) ? rand(0, 100) : null;
+
+                ForecastModel::create([
+                    'city_id' => $city->id,
+                    'temperature' => rand(15, 30),
+                    'humidity' => rand(0, 100),
+                    'Forecast_date' => Carbon::now()->addDays(rand(1, 30)),
+                    'weather_type' => $weatherType,
+                    'probability' => $probability,
+                ]);
+            }
+        }
     }
+
 }

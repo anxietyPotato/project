@@ -76,17 +76,23 @@
     </style>
 </head>
 <body>
-@php
-    $forecast = $cityPrognoza->forecast->first();
-@endphp
-
 <div class="grade-card">
     <h3>{{ $cityPrognoza->name }}</h3>
-    <p>Current temperature: {{ $forecast->temperature ?? 'N/A' }} &#8451;</p>
-    <p class="grade-value">Current humidity of air: {{ $forecast->humidity ?? 'N/A' }} &#37;</p>
+
+    @php
+        $latestForecast = $cityPrognoza->forecasts->first();
+    @endphp
+
+    <p>Current temperature: {{ $latestForecast->temperature ?? 'N/A' }} &#8451;</p>
+    <p class="grade-value">Current humidity of air: {{ $latestForecast->humidity ?? 'N/A' }} &#37;</p>
+
+    <h4>Upcoming Forecast Dates:</h4>
+    <ul>
+        @foreach($cityPrognoza->forecasts as $forecast)
+            <li>{{ $forecast->Forecast_date }}</li>
+        @endforeach
+    </ul>
 </div>
 
-</div>
-</div>
 </body>
 </html>
