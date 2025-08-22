@@ -48,6 +48,13 @@ Route::get('/', [CitiesController::class, 'welcome']);
 
 Route::get('/forecast/{cityPrognoza:name}', [ForecastController::class, 'showForecast'])->name('forecast.view');
 
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/Weather', function () {
+        return view('admin.weather_index');
+    });
+
+});
+
 
 
 
