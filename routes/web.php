@@ -52,6 +52,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/Weather', function () {
         return view('admin.weather_index');
     });
+    Route::post('/Weather/update', [App\Http\Controllers\AdminWeatherController::class, 'update'] )->name('weather.update');
 
 });
 
