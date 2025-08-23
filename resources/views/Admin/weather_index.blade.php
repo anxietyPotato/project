@@ -3,7 +3,7 @@
     <input type="text" name="temperature" placeholder="insert temperature" >
 
 
-    <select name="city" >
+    <select name="city_id" >
 
             @foreach(\App\Models\CitiesPrognoza::all() as $city)
              <option value="{{$city->id}}">
@@ -16,13 +16,13 @@
 
 
     <button> Save </button>
-
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
 </form>
-
-            @foreach(App\Models\CitiesPrognoza::all() as $city)
-                <p>
-                     {{ $city->name }} -
-                     {{ optional($city->latestForecast)->temperature ?? 'No temperature data' }}°C
-                </p>
-            @endforeach
+@foreach(\App\Models\Cities::all() as $city)
+    <p>{{ optional($city->prognoza)->name ?? 'No name found' }} - {{ $city->temperature }}°C</p>
+@endforeach

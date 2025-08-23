@@ -34,6 +34,10 @@ class CitiesPrognoza extends Model
         return $this->latestForecast->humidity ?? null;
     }
 
+    public function prognoza()
+    {
+        return $this->hasOne(CitiesPrognoza::class, 'name', 'name');
+    }
 
 
     public function forecasts()

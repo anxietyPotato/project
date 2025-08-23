@@ -27,7 +27,10 @@ class Cities extends Model
 
 
 
-
+    public function prognoza()
+    {
+        return $this->hasOne(CitiesPrognoza::class, 'id', 'id');
+    }
 
     // 👇 this makes route model binding use "name" instead of "id"
 }
