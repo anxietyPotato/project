@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdminForecastController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\ForecastController;
 use App\Models\Cities;
 use Illuminate\Support\Facades\Route;
+use App\Models\ForecastModel;
+use App\Models\CitiesPrognoza;
 
 /*
     |--------------------------------------------------------------------------
@@ -54,6 +57,29 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     });
 
         Route::post('/Weather/update', [App\Http\Controllers\AdminWeatherController::class, 'update'])->name('weather.update');
+
+
+
+
+
+
+
+    Route::get('/Forecasts', function () {
+        $cities = CitiesPrognoza::with(['forecasts' => function ($q) {
+            $q->orderBy('forecast_date');
+        }])->get();
+
+        return view('admin.Forecasts', [
+            'weatherTypes' => \App\Models\ForecastModel::WEATHERS,
+            'cities' => $cities
+        ]);
+    })->name('forecast.form');
+
+
+    Route::post('/forecast/update', [AdminForecastController::class, 'update'])->name('forecast.update');
+
+
+
 });
 
 

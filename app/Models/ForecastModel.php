@@ -11,7 +11,7 @@ class ForecastModel extends Model
 
     protected $fillable = ['city_id', 'temperature','humidity','Forecast_date','weather_type','probability'];
 
-    const WEATHERS = ['sunny,','rainy', 'snowy'];
+    const WEATHERS = ['sunny', 'rainy', 'snowy'];
 
     public function cityForecast()
     {
@@ -21,6 +21,7 @@ class ForecastModel extends Model
     {
         return $this->hasMany(ForecastModel::class, 'city_id', 'id');
     }
+
 
 
 }

@@ -8,41 +8,40 @@ use App\Models\ForecastModel;
 
 class CitiesPrognoza extends Model
 {
+
+
+
+
+    use HasFactory;
+
     protected $table = 'cities_prognoza';
+
     protected $fillable = ['name'];
 
-
-    public function cities()
-    {
-        return $this->belongsTo(Cities::class, 'city_id');
-    }
-    public function getRouteKeyName()
-    {
-        return 'name';
-    }
-    public function forecast()
+    /**
+     * A city can have many forecasts.
+     */
+    public function forecasts()
     {
         return $this->hasMany(ForecastModel::class, 'city_id', 'id');
     }
+
+    /**
+     * Latest forecast for this city.
+     */
     public function latestForecast()
     {
         return $this->hasOne(ForecastModel::class, 'city_id', 'id')->latestOfMany();
     }
 
+    /**
+     * Shortcut accessor: get humidity from latest forecast.
+     */
     public function getHumidityAttribute()
     {
         return $this->latestForecast->humidity ?? null;
     }
 
-    public function prognoza()
-    {
-        return $this->hasOne(CitiesPrognoza::class, 'name', 'name');
-    }
 
-
-    public function forecasts()
-    {
-        return $this->hasMany(ForecastModel::class, 'city_id', 'id');
-    }
 
 }
