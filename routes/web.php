@@ -64,16 +64,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
 
 
-    Route::get('/Forecasts', function () {
-        $cities = CitiesPrognoza::with(['forecasts' => function ($q) {
-            $q->orderBy('forecast_date');
-        }])->get();
+    Route::get('/Forecasts', [AdminForecastController::class, 'showForm'])->name('forecast.form');
 
-        return view('admin.Forecasts', [
-            'weatherTypes' => \App\Models\ForecastModel::WEATHERS,
-            'cities' => $cities
-        ]);
-    })->name('forecast.form');
 
 
     Route::post('/forecast/update', [AdminForecastController::class, 'update'])->name('forecast.update');
