@@ -16,15 +16,13 @@ class AdminForecastController extends Controller
 
         return view('admin.Forecasts', [
             'weatherTypes' => ForecastModel::WEATHERS,
-            'cities' => $cities
+            'cities' => $cities,
+            'updatedForecastId' => session('updatedForecastId') // 👈 pass to Blade
         ]);
     }
 
-
-
     public function update(Request $request)
     {
-
         $validated = $request->validate([
             'city_id' => 'required|exists:cities_prognoza,id',
             'weather_type' => 'required|string',
@@ -34,11 +32,11 @@ class AdminForecastController extends Controller
             'probability' => 'nullable|numeric|min:0|max:100',
         ]);
 
-        ForecastModel::create($validated);
+        $forecast = ForecastModel::create($validated);
 
-        return redirect()->route('forecast.form')->with('success', 'Forecast successfully added.');
-
+        return redirect()
+            ->route('forecast.form')
+            ->with('success', 'Forecast successfully added.')
+            ->with('updatedForecastId', $forecast->id); // 👈 store forecast ID
     }
-
-
 }

@@ -5,8 +5,6 @@ use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\ForecastController;
 use App\Models\Cities;
 use Illuminate\Support\Facades\Route;
-use App\Models\ForecastModel;
-use App\Models\CitiesPrognoza;
 
 /*
     |--------------------------------------------------------------------------

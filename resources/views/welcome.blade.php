@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Grades</title>
+    <title>weathers</title>
     <style>
         body {
             margin: 0;
@@ -68,7 +68,7 @@
             font-weight: 500;
         }
 
-        .grade-value {
+        city_value {
             font-size: 1.2rem;
             font-weight: bold;
             color: #c0392b;
