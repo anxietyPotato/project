@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminForecastController;
+use App\Http\Controllers\AdminWeatherController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\ForecastController;
 use App\Models\Cities;
@@ -48,29 +49,24 @@ Route::prefix('admin')
 Route::get('/', [CitiesController::class, 'welcome']);
 
 Route::get('/forecast/{cityPrognoza:name}', [ForecastController::class, 'showForecast'])->name('forecast.view');
-
 Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::get('/Weather', function () {
-        return view('admin.weather_index');
-    });
 
-        Route::post('/Weather/update', [App\Http\Controllers\AdminWeatherController::class, 'update'])->name('weather.update');
+    // Weather index (loads $cities + $weatherTypes from controller)
+    Route::get('/Weather', [AdminWeatherController::class, 'showWeatherIndex'])
+        ->name('weather.index');
 
+    // Update weather data
+    Route::post('/Weather/update', [AdminWeatherController::class, 'update'])
+        ->name('weather.update');
 
+    // Forecasts
+    Route::get('/Forecasts', [AdminForecastController::class, 'showForm'])
+        ->name('forecast.form');
 
-
-
-
-
-    Route::get('/Forecasts', [AdminForecastController::class, 'showForm'])->name('forecast.form');
-
-
-
-    Route::post('/forecast/update', [AdminForecastController::class, 'update'])->name('forecast.update');
-
-
-
+    Route::post('/forecast/update', [AdminForecastController::class, 'update'])
+        ->name('forecast.update');
 });
+
 
 
 

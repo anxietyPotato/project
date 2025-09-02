@@ -4,6 +4,12 @@
         use App\Models\CitiesPrognoza;
         use Carbon\Carbon;
     @endphp
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 
     {{-- Bootstrap Icons CDN (if not already included in layout) --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -13,8 +19,9 @@
     @endif
 
     <div class="container my-4">
-        <form method="POST" action="{{ route('forecast.update') }}" class="card p-4 shadow-sm mb-5">
-            @csrf
+        <form method="POST" action="{{ route('weather.update') }}" class="card p-4 shadow-sm mb-5">
+
+        @csrf
             <h4 class="mb-3">Update Forecast</h4>
 
             <!-- Cities select -->
@@ -63,6 +70,35 @@
 
             <button type="submit" class="btn btn-success w-100">Update Forecast</button>
         </form>
+        <style>
+            .highlight {
+                background-color: #fff3cd; /* Bootstrap table-warning */
+                transition: background-color 2s ease;
+            }
+            .highlight.fade-out {
+                background-color: transparent !important;
+            }
+        </style>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const updatedRow = document.getElementById('updated-forecast');
+                if (updatedRow) {
+                    updatedRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    updatedRow.classList.add('highlight');
+
+                    // Fade out after 3 seconds
+                    setTimeout(() => {
+                        updatedRow.classList.add('fade-out');
+                    }, 3000);
+
+                    // Cleanup classes after 5 seconds
+                    setTimeout(() => {
+                        updatedRow.classList.remove('highlight', 'fade-out');
+                    }, 5000);
+                }
+            });
+        </script>
 
         <hr class="my-5">
 
@@ -87,27 +123,10 @@
                                     @forelse($city->forecasts as $forecast)
                                         @php
                                             $color = \App\Http\forecastsAdminHelper\forecastsAdminHelper::getColorByTemperature($forecast->temperature);
-
-                                            // Decide icon based on weather type
-                                            $icon = '';
-                                            switch(strtolower($forecast->weather_type)) {
-                                                case 'sunny':
-                                                    $icon = '<i class="bi bi-brightness-high-fill text-warning"></i>';
-                                                    break;
-                                                case 'rainy':
-                                                case 'rain':
-                                                    $icon = '<i class="bi bi-cloud-rain-fill text-primary"></i>';
-                                                    break;
-                                                case 'snowy':
-                                                case 'snow':
-                                                    $icon = '<i class="bi bi-cloud-snow-fill text-info"></i>';
-                                                    break;
-                                                default:
-                                                    $icon = '<i class="bi bi-cloud-fill text-secondary"></i>';
-                                            }
+                                            $icon = \App\Http\forecastsAdminHelper\forecastsAdminHelper::getWeatherIcon($forecast->weather_type);
                                         @endphp
                                         <tr>
-                                            <td>{{ Carbon::parse($forecast->Forecast_date)->format('Y-m-d') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($forecast->Forecast_date)->format('Y-m-d') }}</td>
                                             <td>{!! $icon !!} {{ ucfirst($forecast->weather_type) }}</td>
                                             <td style="color: {{$color}}">{{ $forecast->temperature }}</td>
                                             <td>{{ $forecast->humidity }}</td>
@@ -118,6 +137,8 @@
                                             <td colspan="5" class="text-muted">No forecasts yet.</td>
                                         </tr>
                                     @endforelse
+
+
                                     </tbody>
                                 </table>
                             </div>

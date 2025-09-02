@@ -110,7 +110,7 @@
                                         <tr id="{{ $forecast->id == ($updatedForecastId ?? null) ? 'updated-forecast' : '' }}">
                                             <td>{{ Carbon::parse($forecast->Forecast_date)->format('Y-m-d') }}</td>
                                             <td>
-                                                <i class="{{ forecastsAdminHelper::getWeatherIcon($forecast->weather_type) }}"></i>
+                                                {!! forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
                                                 {{ ucfirst($forecast->weather_type) }}
                                             </td>
                                             <td style="color: {{ $color }}">{{ $forecast->temperature }}</td>

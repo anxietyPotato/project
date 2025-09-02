@@ -23,17 +23,21 @@ class forecastsAdminHelper
     public static function getWeatherIcon($weatherType)
     {
         $map = [
-            'sunny' => 'fa-solid fa-sun text-warning',
-            'sunny,' => 'fa-solid fa-sun text-warning',
-            'rainy' => 'fa-solid fa-cloud-rain text-primary',
-            'snowy' => 'fa-solid fa-snowflake text-info',
+            'sunny' => '<i class="fa-solid fa-sun text-warning"></i>',
+            'sunny,' => '<i class="fa-solid fa-sun text-warning"></i>',
+            'rainy' => '<i class="fa-solid fa-cloud-rain text-primary"></i>',
+            'snowy' => '<i class="fa-solid fa-snowflake text-info"></i>',
+            'cloudy' => '<i class="fa-solid fa-cloud text-info"></i>',
+
         ];
 
         $key = strtolower(trim($weatherType));
-        return $map[$key] ?? 'fa-solid fa-question-circle text-muted';
+        return $map[$key] ?? '<i class="fa-solid fa-question-circle text-muted"></i>';
+    } //this can be done with constant CONST
+
+
+    public static function getAvailableWeatherTypes(): array
+    {
+        return ['sunny','sunny,', 'rainy', 'snowy','cloudy'];
     }
-
-
-
-
 }

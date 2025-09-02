@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CitiesPrognoza;
+use App\Http\forecastsAdminHelper\forecastsAdminHelper;
 
 class AdminWeatherController extends Controller
 {
@@ -26,4 +28,20 @@ class AdminWeatherController extends Controller
         return redirect()->back()->with('error', 'City not found.');
     }
 
+
+
+    public function showWeatherIndex()
+    {
+        $cities = CitiesPrognoza::with('forecasts')->get();
+        $weatherTypes = [
+            'sunny',
+            'rainy',
+            'snowy',
+            'rain',
+            'snow',
+        ];
+        $weatherTypes = forecastsAdminHelper::getAvailableWeatherTypes();
+
+        return view('Admin.weather_index', compact('cities', 'weatherTypes'));
+    }
 }
