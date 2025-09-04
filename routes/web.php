@@ -28,10 +28,7 @@ require __DIR__.'/auth.php';
 
 
 
-Route::get('/', function () {
-    $city = Cities::all();
-    return view('welcome',compact('city')); //done
-});
+Route::view('/', 'welcome');
 
 Route::prefix('admin')
     ->middleware('auth' )

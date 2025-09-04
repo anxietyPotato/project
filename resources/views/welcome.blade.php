@@ -1,116 +1,20 @@
-
-<!DOCTYPE html>
+@extends('layout')
+@section('content')
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>weathers</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg,
-            #8faab1,
-            #7cb3ae,
-            #e6e1c2,
-            #cdb26f,
-            #94b79a
-            );
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .grade-card {
-            background: white;
-            border-left: 6px solid #a83279;
-            border-radius: 50px;
-            padding: 25px 30px;
-            width: 280px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-            color: #333;
-            transition: transform 0.2s;
-        }
-
-        .grade-card:hover {
-            transform: scale(1.02);
-        }
-
-        .grade-card h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.4rem;
-            color: #6a0572;
-        }
-
-        .grade-card p {
-            margin: 5px 0;
-            font-weight: 500;
-        }
-
-        city_value {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #c0392b;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
 </head>
 <body>
-
-<div class="container">
-
-    {{--
-    1. If value exists: {{ $cityForecast->temperature ?? '—' }}
-
-    2. Formatting date:
-    <p>recorded_at:
-        {{ $cityForecast->forecast_date
-            ? Carbon::parse($cityForecast->forecast_date)->format('d M Y H:i')
-            : '—' }}
-    </p>
-    --}}
-
-
-
-@foreach($cities as $city)
-    <div class="grade-card">
-        <h3>{{ $city->cityPrognoza->name ?? $city->name }}</h3>
-        <p>Current temperature: {{ $city->temperature ?? '—' }} &#8451;</p>
-        <p>Current humidity: {{ $city->cityPrognoza->humidity ?? '—' }} &#37;</p>
-
-        <ul>
-            @foreach($city->cityPrognoza->forecasts as $forecast)
-                <li>Forecast date: {{ $forecast->Forecast_date ?? '_' }}</li>
-            @endforeach
-        </ul>
-
-
-
-    </div>
-@endforeach
-
+<form action="" method="get">
+    <input type="text" placeholder="City Search">
+</form>
+<button> Search City</button >
 </body>
 </html>
+@endsection
 
 
 
