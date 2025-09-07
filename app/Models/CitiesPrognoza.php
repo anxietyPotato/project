@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\ForecastModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\ForecastModel;
+
 
 class CitiesPrognoza extends Model
 {
-
-
 
 
     use HasFactory;
@@ -41,7 +40,6 @@ class CitiesPrognoza extends Model
     {
         return $this->latestForecast->humidity ?? null;
     }
-
 
 
 }

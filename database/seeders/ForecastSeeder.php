@@ -59,7 +59,7 @@ class ForecastSeeder extends Seeder
                     'city_id'       => $city->id,
                     'temperature'   => $temperature,
                     'humidity'      => rand(0, 100),
-                    'Forecast_date' => $start->copy()->addDays($i), // sequential dates
+                    'Forecast_date' => Carbon::today()->addDays($i), // sequential dates
                     'weather_type'  => $weatherType,
                     'probability'   => $probability,
                 ]);

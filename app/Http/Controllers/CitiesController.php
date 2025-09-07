@@ -8,49 +8,55 @@ use Illuminate\Http\Request;
 
 class CitiesController extends Controller
 {
-
-
     public function seeCities(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'temperature' => 'nullable|numeric|between:-999.99,999.99',
-            'temperature_recorded_at' => 'nullable|date',
+
+        $cityName = $request->get('city');
+
+        // If no name is provided, show all cities
+        if (empty($cityName)) {
+            $cities = CitiesPrognoza::all();
+            return view('search_results', compact('cities','cityName'));
+        }
+
+        // Validate only if city name is provided
+        $request->validate([
+            'city' => 'string|max:255',
         ]);
+
+        $cities = CitiesPrognoza::where('name', 'LIKE', "%{$cityName}%")->get();
+
+        if ($cities->isEmpty()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', "City '{$cityName}' not found.");
+        }
+
+        return view('search_results', compact('cities', 'cityName'));
     }
 
-
-
-    public function welcome()
+        public function welcome()
     {
-        $cities = Cities::with('cityPrognoza.forecasts')->get(); // eager load relationships
-        return view('welcome', compact('cities'));
+        return view('welcome');
     }
-
-
 
     public function showForm()
     {
-
-        $cities = Cities::all();
+        $cities = CitiesPrognoza::all();
         return view('addCities', compact('cities'));
     }
-
 
     public function addCities(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'temperature' => 'nullable|numeric|between:-999.99,999.99',
-
-
         ]);
 
         Cities::create($validated);
 
         return redirect()->route('addCities')->with('success', 'City added successfully!');
     }
-
 
     public function destroy($id)
     {
@@ -85,15 +91,8 @@ class CitiesController extends Controller
         return redirect()->route('all.Cities')->with('success', 'City updated successfully!');
     }
 
-
-    // You can use $validated to create or update cities now!
-
-// In Cities.php
     public function cityPrognoza()
     {
         return $this->hasOne(CitiesPrognoza::class);
     }
-
 }
-
-

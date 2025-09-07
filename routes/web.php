@@ -28,7 +28,14 @@ require __DIR__.'/auth.php';
 
 
 
-Route::view('/', 'welcome');
+
+
+
+
+
+Route::get('/', [CitiesController::class, 'welcome'])->name('home');
+Route::get('/search', [CitiesController::class, 'seeCities'])->name('search.cities');
+
 
 Route::prefix('admin')
     ->middleware('auth' )
@@ -43,7 +50,7 @@ Route::prefix('admin')
         Route::put('/cities/{city}', [CitiesController::class, 'update'])->name('cities.update');
         Route::delete('/cities/{city}', [CitiesController::class, 'destroy'])->name('cities.destroy');
 });
-Route::get('/', [CitiesController::class, 'welcome']);
+
 
 Route::get('/forecast/{cityPrognoza:name}', [ForecastController::class, 'showForecast'])->name('forecast.view');
 Route::prefix('admin')->middleware(['auth'])->group(function () {
