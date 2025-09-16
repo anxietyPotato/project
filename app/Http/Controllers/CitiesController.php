@@ -17,7 +17,7 @@ class CitiesController extends Controller
 
         // If no name is provided, show all cities
         if (empty($cityName)) {
-            $cities = CitiesPrognoza::all();
+            $cities = CitiesPrognoza::with('oneForecast')->get();
             return view('search_results', compact('cities','cityName'));
         }
 
@@ -26,7 +26,7 @@ class CitiesController extends Controller
             'city' => 'string|max:255',
         ]);
 
-        $cities = CitiesPrognoza::with('oneForecast')->where('name', 'LIKE', "%{$cityName}%")->get();
+        $cities = CitiesPrognoza::with('oneForecast','forecasts')->where('name', 'LIKE', "%{$cityName}%")->get();
 
         if ($cities->isEmpty()) {
             return redirect()->back()
@@ -44,7 +44,7 @@ class CitiesController extends Controller
 
     public function showForm()
     {
-        $cities = CitiesPrognoza::all();
+        $cities = CitiesPrognoza::with('latestForecast')->get();
         return view('addCities', compact('cities'));
     }
 
@@ -69,7 +69,7 @@ class CitiesController extends Controller
 
     public function allCities()
     {
-        $cities = Cities::all();
+        $cities = Cities::with('cityPrognoza')->get();
         return view('allCities', compact('cities'));
     }
 
