@@ -14,6 +14,8 @@
                 <div class="alert alert-danger text-center mt-3">
                     {{ session('error') }}
                 </div>
+
+
             @endif
             <form action="{{ route('search.cities') }}" method="get">
                 <input type="text" name="city" class="form-control mb-3" placeholder="Enter city name">

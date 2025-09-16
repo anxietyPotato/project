@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cities;
 use App\Models\CitiesPrognoza;
+use App\Models\ForecastModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CitiesController extends Controller
@@ -24,7 +26,7 @@ class CitiesController extends Controller
             'city' => 'string|max:255',
         ]);
 
-        $cities = CitiesPrognoza::where('name', 'LIKE', "%{$cityName}%")->get();
+        $cities = CitiesPrognoza::with('oneForecast')->where('name', 'LIKE', "%{$cityName}%")->get();
 
         if ($cities->isEmpty()) {
             return redirect()->back()
@@ -95,4 +97,5 @@ class CitiesController extends Controller
     {
         return $this->hasOne(CitiesPrognoza::class);
     }
+
 }

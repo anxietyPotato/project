@@ -22,7 +22,7 @@ class ForecastSeeder extends Seeder
             $lastTemperature = null;                  //  per city
             $start = \Carbon\Carbon::today();
 
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 1; $i <= 30; $i++) {
                 $weatherType = ForecastModel::WEATHERS[rand(0, 3)];
                 $probability = in_array($weatherType, ['rainy','snowy','cloudy']) ? rand(1, 100) : null;
 
@@ -59,7 +59,7 @@ class ForecastSeeder extends Seeder
                     'city_id'       => $city->id,
                     'temperature'   => $temperature,
                     'humidity'      => rand(0, 100),
-                    'Forecast_date' => Carbon::today()->addDays($i), // sequential dates
+                    'Forecast_date' => $start->copy()->addDays($i), // sequential dates
                     'weather_type'  => $weatherType,
                     'probability'   => $probability,
                 ]);

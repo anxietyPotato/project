@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\ForecastModel;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -41,5 +41,10 @@ class CitiesPrognoza extends Model
         return $this->latestForecast->humidity ?? null;
     }
 
-
+// In CitiesPrognoza.php
+    public function oneForecast()
+    {
+        return $this->hasOne(ForecastModel::class, 'city_id', 'id')
+            ->whereDate('Forecast_date', Carbon::now()->format('Y-m-d'));
+    }
 }
