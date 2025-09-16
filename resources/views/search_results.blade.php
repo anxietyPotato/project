@@ -11,32 +11,22 @@
                     @foreach($cities as $city)
                         <div class="col-6 col-md-4 col-lg-3">
                             <div class="card h-100 shadow-sm bg-primary text-white">
-                                <div class="card-body d-flex flex-column align-items-center justify-content-between">
-                                    <!-- City Name -->
-                                    <h5 class="card-title mb-3">{{ $city->name }}</h5>
+                                <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                    <h5 class="card-title mb-2">{{ $city->name }}</h5>
 
                                     @php
                                         $forecast = $city->oneForecast;
                                     @endphp
 
                                     @if($forecast)
-                                        <!-- Mini Container for Forecast -->
-                                        <div class="w-100 p-3 rounded bg-light text-dark text-center">
-                                            <!-- Weather Icon -->
-                                            <div class="fs-2 mb-2">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <div class="fs-2 mb-1">
                                                 {!! forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
                                             </div>
-
-                                            <!-- Weather Type -->
-                                            <div class="fw-semibold mb-1">
+                                            <div class="text-white-50">
                                                 {{ ucfirst($forecast->weather_type) }}
                                             </div>
 
-                                            <!-- Temperature -->
-                                            <div class="fw-bold"
-                                                 style="color: {{ forecastsAdminHelper::getColorByTemperature($forecast->temperature) }}">
-                                                {{ $forecast->temperature }}°C
-                                            </div>
                                         </div>
                                     @else
                                         <div class="text-white-50">No forecast</div>
@@ -51,5 +41,7 @@
             @endif
 
         </div>
+
+
     </div>
 @endsection
