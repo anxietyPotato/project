@@ -12,6 +12,7 @@
                         <div class="col-6 col-md-4 col-lg-3">
                             <div class="card h-100 shadow-sm bg-primary text-white">
                                 <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                    <i class="fa-regular fa-heart"></i>
                                     <h5 class="card-title mb-2">{{ $city->name }}</h5>
 
                                     @php
