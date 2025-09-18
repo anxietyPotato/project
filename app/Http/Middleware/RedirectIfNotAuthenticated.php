@@ -16,6 +16,12 @@ class RedirectIfNotAuthenticated
      */
     public function handle(Request $request, Closure $next)
     {
+        if (!auth()->check()) {
+            session()->flash('message', 'Please log in to continue.');
+            return redirect()->route('welcome');
+        }
+
         return $next($request);
+
     }
 }
