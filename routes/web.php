@@ -6,7 +6,7 @@ use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\ForecastController;
 use App\Models\Cities;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserCitiesController;
 /*
     |--------------------------------------------------------------------------
     | Web Routes
@@ -35,6 +35,10 @@ require __DIR__.'/auth.php';
 
 Route::get('/', [CitiesController::class, 'welcome'])->name('home');
 Route::get('/search', [CitiesController::class, 'seeCities'])->name('search.cities');
+
+
+Route::post('/user-cities/favorite/{city}', [\App\Http\Controllers\UserCitiesController::class, 'favorite'])
+    ->middleware('auth')->name('city.favorite');
 
 
 Route::prefix('admin')
@@ -69,6 +73,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::post('/forecast/update', [AdminForecastController::class, 'update'])
         ->name('forecast.update');
+
+
 });
 
 

@@ -7,42 +7,42 @@
             <h3 class="text-center mb-4">Search Results for "{{ $cityName }}"</h3>
 
             @if($cities->count())
-                <div class="row g-3">
+                <div class="d-flex flex-column gap-3">
                     @foreach($cities as $city)
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="card h-100 shadow-sm bg-primary text-white">
-                                <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <h5 class="card-title mb-2">{{ $city->name }}</h5>
+                        <div class="d-flex justify-content-between align-items-center bg-primary text-white px-4 py-3 rounded shadow-sm">
+                            <div class="d-flex flex-column">
+                                <h5 class="mb-1">{{ $city->name }}</h5>
+                                @php $forecast = $city->oneForecast; @endphp
 
-                                    @php
-                                        $forecast = $city->oneForecast;
-                                    @endphp
-
-                                    @if($forecast)
-                                        <div class="d-flex flex-column align-items-center">
-                                            <div class="fs-2 mb-1">
-                                                {!! forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
-                                            </div>
-                                            <div class="text-white-50">
-                                                {{ ucfirst($forecast->weather_type) }}
-                                            </div>
-
+                                @if($forecast)
+                                    <div class="d-flex align-items-center gap-2 text-white-50">
+                                        <div class="fs-4">
+                                            {!! forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
                                         </div>
-                                    @else
-                                        <div class="text-white-50">No forecast</div>
-                                    @endif
-                                </div>
+                                        <div>{{ ucfirst($forecast->weather_type) }}</div>
+                                    </div>
+                                @else
+                                    <div class="text-white-50">No forecast</div>
+                                @endif
                             </div>
+
+                            <!-- Heart Button on the Right -->
+                            <form method="POST" action="{{ route('city.favorite',['city'=>$city->id]) }}">
+                                @csrf
+                                <input type="hidden" name="city_id" value="{{ $city->id }}">
+                                <button type="submit" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </form>
                         </div>
                     @endforeach
-                </div>
+
             @else
                 <p class="text-center">No cities found.</p>
             @endif
 
-        </div>
 
 
-    </div>
+
+
 @endsection
