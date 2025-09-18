@@ -38,7 +38,7 @@ Route::get('/search', [CitiesController::class, 'seeCities'])->name('search.citi
 
 
 Route::post('/user-cities/favorite/{city}', [\App\Http\Controllers\UserCitiesController::class, 'favorite'])
-    ->middleware('auth')->name('city.favorite');
+    ->middleware('custom.auth')->name('city.favorite');
 
 
 Route::prefix('admin')

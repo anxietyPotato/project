@@ -2,6 +2,7 @@
 @extends('layout')
 
 @section('content')
+    @csrf
     <div class="container-fluid min-vh-100 bg-dark text-white py-5">
         <div class="container">
             <h3 class="text-center mb-4">Search Results for "{{ $cityName }}"</h3>
