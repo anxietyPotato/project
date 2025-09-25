@@ -7,6 +7,8 @@ use App\Models\CitiesPrognoza;
 use App\Models\ForecastModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class CitiesController extends Controller
 {
@@ -33,6 +35,17 @@ class CitiesController extends Controller
                 ->withInput()
                 ->with('error', "City '{$cityName}' not found.");
         }
+
+
+        $user = auth()->user();
+
+        if ($user) {
+            $favorites = $user->cityfavorites;
+        } else {
+            $favorites = collect(); // or null, depending on how you want to handle it
+        }
+
+
 
         return view('search_results', compact('cities', 'cityName'));
     }

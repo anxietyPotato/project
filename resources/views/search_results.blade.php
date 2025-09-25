@@ -2,6 +2,19 @@
 @extends('layout')
 
 @section('content')
+    @if(session('error'))
+        <div class="alert alert-danger text-center mt-3">
+            {{ session('error') }}
+        </div>
+
+
+    @endif
+
+    @if(session('message'))
+        <div class="alert alert-warning text-center mt-3">
+            {{ session('message') }}
+        </div>
+    @endif
     @csrf
     <div class="container-fluid min-vh-100 bg-dark text-white py-5">
         <div class="container">

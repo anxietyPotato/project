@@ -62,9 +62,9 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
-    public function Fav()
+    public function cityfavorites(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Fav::class);
+        return $this->hasMany(UserCitiesModel::class,'user_id','id');
     }
 
 }
