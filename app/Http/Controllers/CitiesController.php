@@ -42,10 +42,17 @@ class CitiesController extends Controller
         return view('search_results', compact('cities', 'cityName', 'cityfavorites'));
     }
 
-        public function welcome()
+    public function welcome()
     {
-        return view('welcome');
+
+        $user = auth()->user();
+        // Get the user's favorite cities, include the related city model (CitiesPrognoza)
+        // If not logged in, return an empty collection so Blade won't break
+        $favorites = $user ? $user->cityfavorites()->with('city')->get() : collect();
+        // Pass favorites to the welcome view
+        return view('welcome', compact('favorites'));
     }
+
 
     public function showForm()
     {
