@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Cities;
+use App\Models\CitiesPrognoza;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
@@ -13,12 +14,18 @@ class CitiesSeeder extends Seeder
         $faker = Faker::create();
         $count = 0;
 
-        for ($i = 0; $i < 100; $i++) {
-            $cityName = $faker->city;
+        $prognozaCities = CitiesPrognoza::all();
 
-            // Skip if city already exists
-            if (Cities::where('name', $cityName)->exists()) {
-                $this->command->error("City '{$cityName}' already exists. Skipping...");
+        if ($prognozaCities->isEmpty()) {
+            $this->command->error("❌ No cities found in cities_prognoza. Seed that table first.");
+            return;
+        }
+
+        foreach ($prognozaCities as $prognozaCity) {
+            $cityName = $prognozaCity->name;
+
+            if (Cities::where('city_id', $prognozaCity->id)->exists()) {
+                $this->command->error("City '{$cityName}' already seeded. Skipping...");
                 continue;
             }
 
@@ -26,12 +33,13 @@ class CitiesSeeder extends Seeder
                 'name' => $cityName,
                 'temperature' => $faker->randomFloat(2, 15, 35),
                 'humidity' => $faker->numberBetween(0, 100),
+                'city_id' => $prognozaCity->id,
             ]);
 
-            $this->command->info("Added city '{$cityName}' successfully.");
+            $this->command->info("✅ Added city '{$cityName}' successfully.");
             $count++;
         }
 
-        $this->command->info("✅ Total new cities added: $count");
+        $this->command->info("🎯 Total new cities added: $count");
     }
 }
