@@ -14,13 +14,14 @@ class CitiesController extends Controller
 {
     public function seeCities(Request $request)
     {
-
         $cityName = $request->get('city');
+        $user = auth()->user();
+        $cityfavorites = $user ? $user->cityfavorites->pluck('id')->toArray() : [];
 
         // If no name is provided, show all cities
         if (empty($cityName)) {
             $cities = CitiesPrognoza::with('oneForecast')->get();
-            return view('search_results', compact('cities','cityName'));
+            return view('search_results', compact('cities', 'cityName', 'cityfavorites'));
         }
 
         // Validate only if city name is provided
@@ -28,7 +29,9 @@ class CitiesController extends Controller
             'city' => 'string|max:255',
         ]);
 
-        $cities = CitiesPrognoza::with('oneForecast','forecasts')->where('name', 'LIKE', "%{$cityName}%")->get();
+        $cities = CitiesPrognoza::with('oneForecast', 'forecasts')
+            ->where('name', 'LIKE', "%{$cityName}%")
+            ->get();
 
         if ($cities->isEmpty()) {
             return redirect()->back()
@@ -36,18 +39,7 @@ class CitiesController extends Controller
                 ->with('error', "City '{$cityName}' not found.");
         }
 
-
-        $user = auth()->user();
-
-        if ($user) {
-            $favorites = $user->cityfavorites;
-        } else {
-            $favorites = collect(); // or null, depending on how you want to handle it
-        }
-
-
-
-        return view('search_results', compact('cities', 'cityName'));
+        return view('search_results', compact('cities', 'cityName', 'cityfavorites'));
     }
 
         public function welcome()

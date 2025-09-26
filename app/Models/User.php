@@ -65,6 +65,7 @@ class User extends Authenticatable
     public function cityfavorites(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(UserCitiesModel::class,'user_id','id');
+
     }
 
 }
