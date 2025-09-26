@@ -16,7 +16,7 @@ class CitiesController extends Controller
     {
         $cityName = $request->get('city');
         $user = auth()->user();
-        $cityfavorites = $user ? $user->cityfavorites->pluck('id')->toArray() : [];
+        $cityfavorites = $user ? $user->cityfavorites->pluck('city_id')->toArray() : [];
 
         // If no name is provided, show all cities
         if (empty($cityName)) {

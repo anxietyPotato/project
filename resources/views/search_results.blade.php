@@ -43,7 +43,6 @@
                             <!-- Heart Button on the Right -->
                             <form method="POST" action="{{ route('city.favorite',['city'=>$city->id]) }}">
                                 @csrf
-                                <input type="hidden" name="city_id" value="{{ $city->id }}">
                                 <button type="submit" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">
                                     @if(in_array($city->id, $cityfavorites))
                                         <i class="fa-solid fa-heart"></i> {{-- Filled heart for liked city --}}
@@ -52,6 +51,7 @@
                                     @endif
                                 </button>
                             </form>
+
 
                         </div>
                     @endforeach

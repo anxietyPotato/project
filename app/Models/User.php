@@ -67,6 +67,12 @@ class User extends Authenticatable
         return $this->hasMany(UserCitiesModel::class,'user_id','id');
 
     }
+    // UserCitiesModel.php
+
+    public function city()
+    {
+        return $this->belongsTo(CitiesPrognoza::class, 'city_id');
+    }
 
 }
 
