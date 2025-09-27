@@ -25,7 +25,7 @@ class forecastsAdminHelper
         $map = [
             'sunny' => '<i class="fa-solid fa-sun text-warning"></i>',
             'sunny,' => '<i class="fa-solid fa-sun text-warning"></i>',
-            'rainy' => '<i class="fa-solid fa-cloud-rain text-primary"></i>',
+            'rainy' => '<i class="fa-solid fa-cloud-showers-heavy"></i>',
             'snowy' => '<i class="fa-solid fa-snowflake text-info"></i>',
             'cloudy' => '<i class="fa-solid fa-cloud text-info"></i>',
 
