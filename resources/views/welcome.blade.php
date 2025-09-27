@@ -44,20 +44,27 @@
                 <ul class="list-unstyled mb-0">
                     @foreach($favorites as $fav)
                         <li class="mb-2">
-                            {{-- Each favorite city is a mini form with a button.
-                                 When clicked, it submits a GET request to the search route
-                                 with the city's name pre-filled. --}}
                             <form action="{{ route('search.cities') }}" method="get">
-                                {{-- Pass city name as hidden input so search results page shows this city --}}
                                 <input type="hidden" name="city" value="{{ $fav->city->name }}">
 
-                                {{-- Button looks small, takes full width --}}
-                                <button type="submit" class="btn btn-sm btn-light w-100 text-start">
-                                    {{ $fav->city->name }}
+                                @php $forecast = $fav->city->oneForecast; @endphp
+
+                                <button type="submit" class="btn btn-sm btn-light w-100 d-flex justify-content-between align-items-center">
+                                    <span>{{ $fav->city->name }}</span>
+
+                                    @if($forecast)
+                                        <span class="d-flex align-items-center gap-1">
+                        {!! \App\Http\forecastsAdminHelper\forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
+                                            {{--use of {{!! this type of echoing data can be used only with trusted files like my own helper,etc. else it makes site vulnerable to SSL attacks
+                                            i am using it here because i am passing raw HTML from my own helper!!}}--}}
+                                            {{ $forecast->temperature }}°C
+                    </span>
+                                    @endif
                                 </button>
                             </form>
                         </li>
                     @endforeach
+
                 </ul>
             </div>
         @endif
