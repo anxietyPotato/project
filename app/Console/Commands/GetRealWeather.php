@@ -65,21 +65,40 @@ class GetRealWeather extends Command
             return 1;
         }
 
-        $data = $response->json();
+        $jsonResponse = $response->json();
 
 
-        $this->info("Weather forecast for {$data['location']['name']}, {$data['location']['country']}:\n");
-        dd($data['forecast']['forecastday'][0]['day']);
+        $this->info("Weather forecast for {$jsonResponse['location']['name']}, {$jsonResponse['location']['country']}:\n");
 
-// loop through forecast days
-        foreach ($data['forecast']['forecastday'] as $day) {
-            $date = $day['date'];
-            $max = $day['day']['maxtemp_c'];
-            $min = $day['day']['mintemp_c'];
-            $condition = $day['day']['condition']['text'];
 
-            $this->line("{$date}: {$condition}, Min: {$min}°C / Max: {$max}°C");
-        }
+
+
+        $avgTemp = $jsonResponse['forecast']['forecastday'][0]['day']['avgtemp_c'];
+        $forecast_date = $jsonResponse['forecast']['forecastday'][0]['day'];
+        $weather_type =  $jsonResponse ['forecast']['forecastday'][0]['day'] ['condition']['text'];
+        $probability =  $jsonResponse ['forecast']['forecastday'][0]['day'] ['daily_chance_of_rain'];
+
+
+
+        $forecast = [
+        'city_id' => $dbCity->city_id,
+        'temperature' => $avgTemp,
+        'forecast_date' => $forecast_date,
+        'weather_type' => $weather_type,
+        'probability' => $probability,
+        ];
+
+        ForecastModel::Create($forecast);
+
+        ForecastModel::Create([
+            'city_id' => $dbCity->city_id,
+            'temperature' => $avgTemp,
+            'forecast_date' => $forecast_date,
+            'weather_type' => $weather_type,
+            'probability' => $probability,
+        ]);
+
+
 
 
         return 0;
