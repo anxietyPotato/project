@@ -14,6 +14,7 @@ class CitiesPrognoza extends Model
 
     use HasFactory;
 
+
     protected $table = 'cities_prognoza';
 
     protected $fillable = ['name'];

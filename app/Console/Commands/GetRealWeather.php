@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Cities;
+use App\Models\CitiesPrognoza;
+use App\Models\ForecastModel;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -29,8 +32,14 @@ class GetRealWeather extends Command
      */
     public function handle()
     {
+        $city = $this->argument('city');
         // Get city from artisan argument
-         $this->argument('city');// Retrieves the 'city' argument passed in the command
+        $dbCity = CitiesPrognoza::where(['name' => $city ])->first(); ;// Retrieves the 'city' argument passed in the command
+
+        if (!$dbCity) {
+            $dbCity = CitiesPrognoza::create(['name' => $city]);
+        }
+
 
         // Use API key from .env file
          env('WEATHER_API_KEY');
@@ -58,7 +67,9 @@ class GetRealWeather extends Command
 
         $data = $response->json();
 
+
         $this->info("Weather forecast for {$data['location']['name']}, {$data['location']['country']}:\n");
+        dd($data['forecast']['forecastday'][0]['day']);
 
 // loop through forecast days
         foreach ($data['forecast']['forecastday'] as $day) {
