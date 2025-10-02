@@ -34,14 +34,21 @@ class GetRealWeather extends Command
 
         // Use API key from .env file
         $apiKey = env('WEATHER_API_KEY');
-
-        // Call the WeatherAPI
-        $response = Http::get('http://api.weatherapi.com/v1/current.json', [
+        $response = Http::get('http://api.weatherapi.com/v1/forecast.json',[
             'key' => $apiKey,
             'q' => $city,
             'aqi' => 'no',
-            'lang' => 'fr'
-        ]);
+            'lang' => 'en',
+            'days' => 5,
+
+        ] );
+
+        // Call the WeatherAPI
+      //  $response = Http::get('http://api.weatherapi.com/v1/current.json', [
+      //      'key' => $apiKey,
+      //      'q' => $city,
+      //      'aqi' => 'no',
+       //     'lang' => 'en']);
 
         if ($response->failed()) {
             //  decode the error message from the response body
@@ -56,11 +63,18 @@ class GetRealWeather extends Command
 
         $data = $response->json();
 
-        // Show weather in console
-        $this->info("Weather in {$data['location']['name']}, {$data['location']['country']}:");
-        $this->line("Temperature: {$data['current']['temp_c']}°C");
-        $this->line("Feels like: {$data['current']['feelslike_c']}°C");
-        $this->line("Condition: {$data['current']['condition']['text']}");
+        $this->info("Weather forecast for {$data['location']['name']}, {$data['location']['country']}:\n");
+
+// loop through forecast days
+        foreach ($data['forecast']['forecastday'] as $day) {
+            $date = $day['date'];
+            $max = $day['day']['maxtemp_c'];
+            $min = $day['day']['mintemp_c'];
+            $condition = $day['day']['condition']['text'];
+
+            $this->line("{$date}: {$condition}, Min: {$min}°C / Max: {$max}°C");
+        }
+
 
         return 0;
 
