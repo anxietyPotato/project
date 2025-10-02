@@ -40,6 +40,7 @@ class GetRealWeather extends Command
             'key' => $apiKey,
             'q' => $city,
             'aqi' => 'no',
+            'lang' => 'fr'
         ]);
 
         if ($response->failed()) {
@@ -62,7 +63,9 @@ class GetRealWeather extends Command
         $this->line("Condition: {$data['current']['condition']['text']}");
 
         return 0;
+
     }
+
 
 
 
