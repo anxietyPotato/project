@@ -43,7 +43,13 @@ class GetRealWeather extends Command
         ]);
 
         if ($response->failed()) {
-            $this->error("Failed to fetch weather for $city");
+            //  decode the error message from the response body
+            $errorData = $response->json();
+
+            // Check if the error structure exists
+            $errorMessage = $errorData['error']['message'] ?? 'Unknown error occurred';
+
+            $this->error("API Error: {$errorMessage}");
             return 1;
         }
 
