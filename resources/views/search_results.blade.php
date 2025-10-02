@@ -33,7 +33,9 @@
                                         <div class="fs-4">
                                             {!! forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
                                         </div>
-                                        <div>{{ ucfirst($forecast->weather_type) }}</div>
+                                        <div class="text-white-50">
+                                            {{ $forecast ? ucfirst($forecast->weather_type) : 'No forecast' }}
+                                        </div>
                                     </div>
                                 @else
                                     <div class="text-white-50">No forecast</div>
@@ -44,11 +46,7 @@
                             <form method="POST" action="{{ route('city.favorite',['city'=>$city->id]) }}">
                                 @csrf
                                 <button type="submit" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">
-                                    @if(in_array($city->id, $cityfavorites))
-                                        <i class="fa-solid fa-heart"></i> {{-- Filled heart for liked city --}}
-                                    @else
-                                        <i class="fa-regular fa-heart"></i> {{-- Empty heart for unliked city --}}
-                                    @endif
+                                    <i class="{{ in_array($city->id, $cityfavorites) ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
                                 </button>
                             </form>
 
