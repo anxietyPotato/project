@@ -30,25 +30,20 @@ class GetRealWeather extends Command
     public function handle()
     {
         // Get city from artisan argument
-        $city = $this->argument('city');// Retrieves the 'city' argument passed in the command
+         $this->argument('city');// Retrieves the 'city' argument passed in the command
 
         // Use API key from .env file
-        $apiKey = env('WEATHER_API_KEY');
-        $response = Http::get('http://api.weatherapi.com/v1/forecast.json',[
-            'key' => $apiKey,
-            'q' => $city,
+         env('WEATHER_API_KEY');
+        $response = Http::get(  env('WEATHER_API_URL').'v1/forecast.json',[
+            'key' => env('WEATHER_API_KEY'),
+            'q' => $this->argument('city'),
             'aqi' => 'no',
             'lang' => 'en',
             'days' => 5,
 
         ] );
 
-        // Call the WeatherAPI
-      //  $response = Http::get('http://api.weatherapi.com/v1/current.json', [
-      //      'key' => $apiKey,
-      //      'q' => $city,
-      //      'aqi' => 'no',
-       //     'lang' => 'en']);
+
 
         if ($response->failed()) {
             //  decode the error message from the response body
