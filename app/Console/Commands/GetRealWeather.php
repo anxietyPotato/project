@@ -28,7 +28,7 @@ class GetRealWeather extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return void
      */
     public function handle()
     {
@@ -70,38 +70,39 @@ class GetRealWeather extends Command
 
         $this->info("Weather forecast for {$jsonResponse['location']['name']}, {$jsonResponse['location']['country']}:\n");
 
-
+  if($dbCity->oneForecast != null){
+      $this->output->comment("Command already executed for this city");
+      return ;
+  }
 
 
         $avgTemp = $jsonResponse['forecast']['forecastday'][0]['day']['avgtemp_c'];
         $forecast_date = $jsonResponse['forecast']['forecastday'][0]['day'];
         $weather_type =  $jsonResponse ['forecast']['forecastday'][0]['day'] ['condition']['text'];
+        $humidity =  $jsonResponse ['forecast']['forecastday'][0]['day'] ['avghumidity'];
         $probability =  $jsonResponse ['forecast']['forecastday'][0]['day'] ['daily_chance_of_rain'];
 
 
 
+
         $forecast = [
-        'city_id' => $dbCity->city_id,
-        'temperature' => $avgTemp,
-        'forecast_date' => $forecast_date,
-        'weather_type' => $weather_type,
-        'probability' => $probability,
-        ];
-
-        ForecastModel::Create($forecast);
-
-        ForecastModel::Create([
-            'city_id' => $dbCity->city_id,
+            'city_id' => $dbCity->id,
             'temperature' => $avgTemp,
-            'forecast_date' => $forecast_date,
+            'Forecast_date' => $jsonResponse['forecast']['forecastday'][0]['date'], // Capital F here
             'weather_type' => $weather_type,
-            'probability' => $probability,
-        ]);
+            'probability' => $jsonResponse['forecast']['forecastday'][0]['day']['daily_chance_of_rain'],
+            'humidity' => $jsonResponse['forecast']['forecastday'][0]['day']['avghumidity'],
+        ];
+        ForecastModel::create($forecast);
 
 
 
 
-        return 0;
+
+
+
+
+
 
     }
 
