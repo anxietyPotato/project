@@ -46,12 +46,13 @@ class GetRealWeather extends Command
 
 
 
-        $response = Http::get('https://jsonplaceholder.typicode.com/users');
-        $data = json_decode($response->body(), true); // true = associative array
-
-        $emails = array_column($data, 'email'); // extract all email fields
-
-        dd($emails);
+        $response = Http::get(
+        'http://api.weatherapi.com/v1/current.json',[
+            'key'=>'4512d595e45846c2af0143918252909',
+            'q'=>'London',
+            'aqi'=>'no',
+        ]);
+        dd($response->body());
 
 
 
