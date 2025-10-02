@@ -40,4 +40,13 @@ class forecastsAdminHelper
     {
         return ['sunny','sunny,', 'rainy', 'snowy','cloudy'];
     }
+    public static function getWeatherIconFromApi(array $condition): string
+    {
+        // WeatherAPI returns icon URLs like: "//cdn.weatherapi.com/weather/64x64/day/302.png"
+        // We'll prepend "https:" to make it a valid URL
+        $iconUrl = 'https:' . $condition['icon'];
+
+        // Return an <img> tag with the icon
+        return '<img src="' . $iconUrl . '" alt="' . htmlspecialchars($condition['text']) . '" title="' . htmlspecialchars($condition['text']) . '" />';
+    }
 }

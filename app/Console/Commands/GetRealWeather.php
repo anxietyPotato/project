@@ -92,10 +92,16 @@ class GetRealWeather extends Command
             'weather_type' => $weather_type,
             'probability' => $jsonResponse['forecast']['forecastday'][0]['day']['daily_chance_of_rain'],
             'humidity' => $jsonResponse['forecast']['forecastday'][0]['day']['avghumidity'],
+            'condition' => $jsonResponse['forecast']['forecastday'][0]['day']['condition'],
         ];
         ForecastModel::create($forecast);
 
 
+        $this->line("🌡️ Temperature: {$avgTemp}°C");
+        $this->line("🌥️ Condition: {$weather_type}");
+        $this->line("💧 Humidity: {$humidity}%");
+        $this->line("🌧️ Chance of Rain: {$probability}%");
+        $this->line("📅 Forecast Date: {$jsonResponse['forecast']['forecastday'][0]['date']}");
 
 
 

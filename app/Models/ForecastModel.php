@@ -9,7 +9,7 @@ class ForecastModel extends Model
 {
     protected $table = 'forecast';
 
-    protected $fillable = ['city_id', 'temperature','humidity','Forecast_date','weather_type','probability'];
+    protected $fillable = ['city_id', 'temperature','humidity','Forecast_date','weather_type','probability','condition',];
 
     const WEATHERS = ['sunny', 'rainy', 'snowy','cloudy'];
 
@@ -22,7 +22,9 @@ class ForecastModel extends Model
         return $this->hasMany(ForecastModel::class, 'city_id', 'id');
     }
 
-
+    protected $casts = [
+        'condition' => 'array',
+    ];
 
 
 }

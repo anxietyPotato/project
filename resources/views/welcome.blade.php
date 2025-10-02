@@ -47,19 +47,22 @@
                             <form action="{{ route('search.cities') }}" method="get">
                                 <input type="hidden" name="city" value="{{ $fav->city->name }}">
 
-                                @php $forecast = $fav->city->oneForecast; @endphp
+                                @php $forecast = $fav->city->oneForecast;   @endphp
 
                                 <button type="submit" class="btn btn-sm btn-light w-100 d-flex justify-content-between align-items-center">
                                     <span>{{ $fav->city->name }}</span>
 
                                     @if($forecast)
                                         <span class="d-flex align-items-center gap-1">
-                        {!! \App\Http\forecastsAdminHelper\forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
-                                            {{--use of {{!! this type of echoing data can be used only with trusted files like my own helper,etc. else it makes site vulnerable to SSL attacks
-                                            i am using it here because i am passing raw HTML from my own helper!!}}--}}
+    @if(is_array($forecast->condition))
+                                                {!! \App\Http\forecastsAdminHelper\forecastsAdminHelper::getWeatherIconFromApi($forecast->condition) !!}
+                                            @else
+                                                <i class="fa-solid fa-question-circle text-muted"></i>
+                                            @endif
                                             {{ $forecast->temperature }}°C
-                    </span>
+</span>
                                     @endif
+
                                 </button>
                             </form>
                         </li>

@@ -7,6 +7,7 @@ use App\Models\CitiesPrognoza;
 use App\Models\ForecastModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
@@ -15,8 +16,12 @@ class CitiesController extends Controller
     public function seeCities(Request $request)
     {
         $cityName = $request->get('city');
+
+        Artisan::call('Weather:command', ['city' => $cityName]);
+
         $user = auth()->user();
         $cityfavorites = $user ? $user->cityfavorites->pluck('city_id')->toArray() : [];
+
 
         // If no name is provided, show all cities
         if (empty($cityName)) {

@@ -28,18 +28,13 @@
                                 <h5 class="mb-1">{{ $city->name }}</h5>
                                 @php $forecast = $city->oneForecast; @endphp
 
-                                @if($forecast)
-                                    <div class="d-flex align-items-center gap-2 text-white-50">
-                                        <div class="fs-4">
-                                            {!! forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
-                                        </div>
-                                        <div class="text-white-50">
-                                            {{ $forecast ? ucfirst($forecast->weather_type) : 'No forecast' }}
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="text-white-50">No forecast</div>
-                                @endif
+                                <div class="fs-4">
+                                    @if(is_array($forecast->condition))
+                                        {!! forecastsAdminHelper::getWeatherIconFromApi($forecast->condition) !!}
+                                    @else
+                                        {!! forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
+                                    @endif
+                                </div>
                             </div>
 
                             <!-- Heart Button on the Right -->
