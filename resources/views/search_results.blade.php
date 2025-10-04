@@ -26,13 +26,19 @@
                         <div class="d-flex justify-content-between align-items-center bg-primary text-white px-4 py-3 rounded shadow-sm">
                             <div class="d-flex flex-column">
                                 <h5 class="mb-1">{{ $city->name }}</h5>
+
+
                                 @php $forecast = $city->oneForecast; @endphp
 
                                 <div class="fs-4">
-                                    @if(is_array($forecast->condition))
-                                        {!! forecastsAdminHelper::getWeatherIconFromApi($forecast->condition) !!}
+                                    @if($forecast)
+                                        @if(is_array($forecast->condition))
+                                            {!! forecastsAdminHelper::getWeatherIconFromApi($forecast->condition) !!}
+                                        @else
+                                            {!! forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
+                                        @endif
                                     @else
-                                        {!! forecastsAdminHelper::getWeatherIcon($forecast->weather_type) !!}
+                                        <span class="text-warning">No forecast available</span>
                                     @endif
                                 </div>
                             </div>
