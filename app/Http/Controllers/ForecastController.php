@@ -10,39 +10,34 @@ use Illuminate\Http\Request;
 use App\Models\Cities;
 use App\Models\CitiesPrognoza;
 use Illuminate\Support\Facades\Http;
+use App\Services\WeatherServices;
 
 class ForecastController extends Controller
 {
 
 
-
-
     public function showForecast(CitiesPrognoza $cityPrognoza)
     {
-        // Fetch astronomy data (sunrise/sunset)
-        $astronomyResponse = Http::get(env('WEATHER_API_URL') . 'v1/astronomy.json', [
-            'key' => env('WEATHER_API_KEY'),
-            'q' => $cityPrognoza->name,
-            'lang' => 'en',
-        ]);
+        $weatherService = new WeatherServices();
 
-        // Fetch forecast data
-        $forecastResponse = Http::get(env('WEATHER_API_URL') . 'v1/forecast.json', [
-            'key' => env('WEATHER_API_KEY'),
-            'q' => $cityPrognoza->name,
-            'days' => 5,
-            'lang' => 'en',
-        ]);
+        $astronomyResponse = $weatherService->getAstronomy($cityPrognoza->name);
+        $forecastResponse = $weatherService->getForecast($cityPrognoza->name);
 
         if ($astronomyResponse->failed() || $forecastResponse->failed()) {
             return back()->with('error', 'Could not fetch data from WeatherAPI.');
         }
 
         $astronomy = $astronomyResponse->json()['astronomy']['astro'] ?? [];
-        $forecast = $forecastResponse->json()['forecast']['forecastday'] ?? [];
+        $forecast = $forecastResponse->json()['forecast']['forecastday'] ?? []; //- “If that nested value doesn't exist (i.e., it's null or missing), use an empty array instead.”
+
 
         return view('forecast', compact('cityPrognoza', 'astronomy', 'forecast'));
     }
+
+
+
+
+
 
 
 
