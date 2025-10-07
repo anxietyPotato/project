@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Cities;
 use App\Models\CitiesPrognoza;
 use App\Models\ForecastModel;
+use App\Services\WeatherServices;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -42,15 +43,18 @@ class GetRealWeather extends Command
 
 
         // Use API key from .env file
-         env('WEATHER_API_KEY');
-        $response = Http::get(  env('WEATHER_API_URL').'v1/forecast.json',[
-            'key' => env('WEATHER_API_KEY'),
-            'q' => $this->argument('city'),
-            'aqi' => 'no',
-            'lang' => 'en',
-            'days' => 5,
+       $weatherService = new WeatherServices();
 
-        ] );
+        $response = $weatherService->getWeather($city);
+
+        if ($response->failed()) {
+            $errorData = $response->json();
+            $errorMessage = $errorData['error']['message'] ?? 'Unknown error occurred';
+            $this->error("API Error: {$errorMessage}");
+            return ;
+        }
+
+        $jsonResponse = $response->json(); // Now safely convert to array
 
 
 
@@ -62,7 +66,7 @@ class GetRealWeather extends Command
             $errorMessage = $errorData['error']['message'] ?? 'Unknown error occurred';
 
             $this->error("API Error: {$errorMessage}");
-            return 1;
+            return ;
         }
 
         $jsonResponse = $response->json();
