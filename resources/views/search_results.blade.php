@@ -26,6 +26,11 @@
                         <div class="d-flex justify-content-between align-items-center bg-primary text-white px-4 py-3 rounded shadow-sm">
                             <div class="d-flex flex-column">
                                 <h5 class="mb-1">{{ $city->name }}</h5>
+                                <a href="{{ route('forecast.view', ['cityPrognoza' => $city->name]) }}"
+                                   class="btn btn-sm btn-warning mt-2">
+                                    🌦 View Forecast
+                                </a>
+
 
 
                                 @php $forecast = $city->oneForecast; @endphp
@@ -53,6 +58,7 @@
 
 
                         </div>
+
                     @endforeach
 
             @else

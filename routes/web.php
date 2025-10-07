@@ -41,6 +41,8 @@ Route::post('/user-cities/favorite/{city}', [\App\Http\Controllers\UserCitiesCon
     ->middleware('custom.auth')->name('city.favorite');
 
 
+
+
 Route::prefix('admin')
     ->middleware('auth' )
     ->group(function () {

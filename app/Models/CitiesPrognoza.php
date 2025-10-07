@@ -49,4 +49,10 @@ class CitiesPrognoza extends Model
         return $this->hasOne(ForecastModel::class, 'city_id', 'id')
             ->whereDate('Forecast_date', Carbon::now()->format('Y-m-d'));
     }
+    // App\Models\CitiesPrognoza.php
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+
 }

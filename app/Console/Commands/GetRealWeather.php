@@ -75,12 +75,13 @@ class GetRealWeather extends Command
       return ;
   }
 
+   $forecastDay= $jsonResponse['forecast']['forecastday'][0]['day'];
 
-        $avgTemp = $jsonResponse['forecast']['forecastday'][0]['day']['avgtemp_c'];
-        $forecast_date = $jsonResponse['forecast']['forecastday'][0]['day'];
-        $weather_type =  $jsonResponse ['forecast']['forecastday'][0]['day'] ['condition']['text'];
-        $humidity =  $jsonResponse ['forecast']['forecastday'][0]['day'] ['avghumidity'];
-        $probability =  $jsonResponse ['forecast']['forecastday'][0]['day'] ['daily_chance_of_rain'];
+        $avgTemp = $forecastDay['avgtemp_c'];
+        $forecast_date = $forecastDay;
+        $weather_type =  $forecastDay ['condition']['text'];
+        $humidity =  $forecastDay ['avghumidity'];
+        $probability =  $forecastDay['daily_chance_of_rain'];
 
 
 
